@@ -1,0 +1,49 @@
+#!/bin/bash
+# Execute script via
+# bash bold-fsl-runfsf-lvl1.sh
+
+# This script runs the fsf file of everyone, but assumes it's been created already
+#
+
+## Run in parallel?
+#export FSLPARALLEL=condor
+
+## Set Base directory
+basedir=/home/lauryn/Documents/FCTM_S/MRI_Data/Analyses
+
+## List subjects
+#subs="15202 15203 15205 15206 15207 15208 15209 15210 15211 15212 15213"
+subs="17271"
+# 17272 17273 17274 17275 17276 17277 17280 17288 17299 17304 17305 17312 17313 17314 17315 17316 17317 17318 17319 17332 17333"
+#17271 17272 17273 17274 17275 17276 17277 17280 17288 17299 17304 17305 17312 17313 17314 17315 17316 17317 17318 17319 17332 17333"
+
+
+## list of runs
+runs="1 2 3 4 5 6"
+#runs="1 2 3"
+
+## List model name/type
+model=fsfA
+
+## Set type of fsf approach (trialwise, or basic)
+type=A_task
+#block=regulate
+
+## Remove earlier feat directory?
+removefeat="true"
+
+# Loop through every scan collected so far
+for sub in $subs; do
+	echo $sub
+	#if [ "$removefeat" == "true" ]
+		#then
+		#rm -r ${basedir}/$sub/model/model001/${block}-run${run}.feat
+	#fi
+	#CD to design dir and run fsf
+	designDir=${basedir}/group/models/$model/lvl2
+	cd $designDir
+	fsf=${type}-lvl2fe-TEMP${sub}.fsf
+	feat $fsf
+	# Remove temp fsf file
+	#rm ${fsf}
+done
